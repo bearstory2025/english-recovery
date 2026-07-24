@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <title>90-Day English Recovery</title>
+  <meta name="description" content="个人 90 天英语恢复训练系统">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <button id="menu-button" class="icon-button mobile-only" aria-label="打开导航" aria-expanded="false">
+      <span aria-hidden="true">☰</span>
+    </button>
+    <button class="brand" data-view="today">
+      <strong>90-Day Journey Map</strong>
+      <span>我的英语恢复系统</span>
+    </button>
+    <nav id="main-nav" aria-label="主要导航">
+      <button data-view="today">今日训练</button>
+      <button data-view="plan">90天计划</button>
+      <button data-view="library">语料库</button>
+      <button data-view="evidence">作品与进步</button>
+      <button data-view="review">复盘</button>
+    </nav>
+    <div class="top-meta">
+      <span id="today-date"></span>
+      <span class="save-state">已保存到此浏览器</span>
+    </div>
+  </header>
+
+  <main id="app" tabindex="-1"></main>
+
+  <template id="today-template">
+    <div class="page">
+      <section class="journey-hero">
+        <div class="day-summary">
+          <p class="eyebrow">阶段 1 · 重新开口</p>
+          <div class="day-number"><strong data-bind="day"></strong><span>/ 90 天</span></div>
+          <p>已坚持 <b data-bind="streak"></b> 天 · 继续向前</p>
+          <div class="ratio-row"><span>工作英语 70%</span><i><b style="width:70%"></b></i></div>
+          <div class="ratio-row social"><span>生活/社交英语 30%</span><i><b style="width:30%"></b></i></div>
+        </div>
+        <div class="journey-track">
+          <div class="track-title"><strong>90 天恢复计划</strong><span>下一个里程碑：完成 1 分钟项目更新</span></div>
+          <div class="progress-line"><i data-bind-width="progress"></i></div>
+          <div class="milestones">
+            <span><b>0</b><small>启动</small></span>
+            <span><b>30</b><small>项目更新</small></span>
+            <span><b>60</b><small>说明问题</small></span>
+            <span><b>90</b><small>参与会议</small></span>
+          </div>
+          <div class="milestone-note"><strong data-bind="remaining"></strong><span>本周集中练习结构化表达与衔接词</span></div>
+        </div>
+      </section>
+      <section class="dashboard-grid">
+        <div>
+          <div class="section-heading"><div><h2>今日训练</h2><p>目标：清晰表达项目现状，并给出可靠下一步</p></div><strong data-bind="task-count"></strong></div>
+          <button class="primary-action" data-action="studio">▶ <span data-bind="start-copy"></span><span>→</span></button>
+          <div id="task-list" class="task-list"></div>
+          <button id="complete-day" class="complete-day" hidden>完成今天</button>
+        </div>
+        <div>
+          <div class="section-heading"><div><h2>最近作品</h2><p>录音与复盘证据</p></div></div>
+          <div id="home-evidence" class="evidence-list"></div>
+        </div>
+        <div>
+          <div class="section-heading"><div><h2>进步概览</h2><p>只展示真实记录</p></div></div>
+          <div class="mini-stats"><div><strong data-bind="streak"></strong><span>连续天数</span></div><div><strong data-bind="recordings"></strong><span>录音练习</span></div></div>
+          <div id="home-progress"></div>
+        </div>
+      </section>
+    </div>
+  </template>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>
