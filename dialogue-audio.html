@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>30 天情境对话音频</title>
+  <style>
+    :root {
+      --ink: #172b3a;
+      --muted: #63727e;
+      --navy: #17324d;
+      --teal: #167d78;
+      --line: #d2dbe3;
+      --soft: #f3f6f8;
+      --paper: #fff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--soft);
+      color: var(--ink);
+      font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+      letter-spacing: 0;
+    }
+    header { background: var(--navy); color: white; padding: 28px 20px; }
+    header > div, main { width: min(800px, 100%); margin: 0 auto; }
+    h1 { margin: 0; font-size: 27px; }
+    header p { margin: 8px 0 0; color: #d7e5f0; line-height: 1.6; }
+    main { padding: 20px; }
+    .notice {
+      padding: 15px 17px;
+      background: #eaf7f5;
+      border-left: 4px solid var(--teal);
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+    .lesson {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      padding: 18px;
+      margin: 12px 0;
+      scroll-margin-top: 12px;
+    }
+    .lesson:target { border: 2px solid var(--teal); }
+    .head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 13px;
+    }
+    h2 { font-size: 19px; margin: 0; }
+    .roles { color: var(--muted); font-size: 13px; white-space: nowrap; }
+    .track { display: grid; grid-template-columns: 150px 1fr; align-items: center; gap: 12px; margin: 9px 0; }
+    .track strong { font-size: 14px; }
+    audio { width: 100%; height: 38px; }
+    .hint { color: var(--muted); font-size: 12px; line-height: 1.55; margin-top: 10px; }
+    footer { color: var(--muted); text-align: center; padding: 24px 20px 40px; font-size: 13px; }
+    @media (max-width: 620px) {
+      .track { grid-template-columns: 1fr; gap: 4px; }
+      .head { align-items: flex-start; flex-direction: column; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>30 天情境对话音频</h1>
+      <p>每课包含完整对话和两条角色留白音轨。配合《30 天英语情境对话教程》使用。</p>
+    </div>
+  </header>
+  <main>
+    <div class="notice">
+      <strong>推荐顺序：</strong>先听完整对话两遍；再播放“你扮演人物 A”，在留白处说 A 的台词；然后交换角色；最后关闭文本，用自己的话复述发生了什么。
+    </div>
+    <div id="lessons"></div>
+  </main>
+  <footer>音频用于跟读与角色练习。留白长度按照原台词时长生成。</footer>
+  <script>
+    const lessons = [
+      ["第一次见到新同事", "Zhongpeng", "Emma"],
+      ["解释自己的工作", "Emma", "Zhongpeng"],
+      ["为什么重新学英语", "Emma", "Zhongpeng"],
+      ["咖啡店里的深圳闲聊", "Alex", "Zhongpeng"],
+      ["聊周末和兴趣", "Emma", "Zhongpeng"],
+      ["把闲聊继续下去", "Alex", "Zhongpeng"],
+      ["一周后的咖啡对话", "Emma", "Zhongpeng"],
+      ["客户报告问题", "David", "Zhongpeng"],
+      ["把模糊需求问清楚", "David", "Zhongpeng"],
+      ["一分钟项目更新", "Zhongpeng", "David"],
+      ["解释限制而不推卸责任", "David", "Zhongpeng"],
+      ["不做过度承诺", "David", "Zhongpeng"],
+      ["提出临时方案", "Zhongpeng", "David"],
+      ["问题关闭前的总结", "David", "Zhongpeng"],
+      ["主持项目会议", "Zhongpeng", "Maya"],
+      ["确认自己理解正确", "Maya", "Zhongpeng"],
+      ["会议中澄清模糊信息", "Maya", "Zhongpeng"],
+      ["专业地表达不同意见", "Maya", "Zhongpeng"],
+      ["推动内部团队", "Zhongpeng", "Sarah"],
+      ["应对客户的时间压力", "David", "Zhongpeng"],
+      ["十分钟项目会议的核心片段", "David", "Zhongpeng"],
+      ["区分事实和推测", "Maya", "Zhongpeng"],
+      ["承认错误并修正", "Zhongpeng", "David"],
+      ["比较两个方案", "Maya", "Zhongpeng"],
+      ["在行业活动中认识新朋友", "Sarah", "Zhongpeng"],
+      ["讲一次海外经历", "Sarah", "Zhongpeng"],
+      ["讨论 AI 对工作的影响", "Sarah", "Zhongpeng"],
+      ["面试中讲项目案例", "Sarah", "Zhongpeng"],
+      ["从问题到决定的完整客户电话", "David", "Zhongpeng"],
+      ["30 天后的回顾对话", "Emma", "Zhongpeng"]
+    ];
+    const container = document.querySelector("#lessons");
+    lessons.forEach(([title, roleA, roleB], index) => {
+      const day = String(index + 1).padStart(2, "0");
+      const lesson = document.createElement("section");
+      lesson.className = "lesson";
+      lesson.id = `day-${day}`;
+      lesson.innerHTML = `
+        <div class="head">
+          <h2>Day ${day} · ${title}</h2>
+          <span class="roles">${roleA} / ${roleB}</span>
+        </div>
+        <div class="track">
+          <strong>完整双人对话</strong>
+          <audio controls preload="metadata" src="dialogue-audio/day-${day}-full.m4a"></audio>
+        </div>
+        <div class="track">
+          <strong>你扮演 ${roleA}</strong>
+          <audio controls preload="metadata" src="dialogue-audio/day-${day}-role-a.m4a"></audio>
+        </div>
+        <div class="track">
+          <strong>你扮演 ${roleB}</strong>
+          <audio controls preload="metadata" src="dialogue-audio/day-${day}-role-b.m4a"></audio>
+        </div>
+        <div class="hint">完整听两遍 → 扮演 ${roleA} → 扮演 ${roleB} → 合上教程复述</div>
+      `;
+      container.appendChild(lesson);
+    });
+  </script>
+</body>
+</html>
