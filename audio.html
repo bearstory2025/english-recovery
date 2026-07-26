@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>30 天英语训练音频</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #172b3a;
+      --muted: #667783;
+      --navy: #17324d;
+      --teal: #167d78;
+      --line: #d2dbe3;
+      --soft: #f4f7f9;
+      --paper: #ffffff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--soft);
+      color: var(--ink);
+      font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+      letter-spacing: 0;
+    }
+    header {
+      background: var(--navy);
+      color: white;
+      padding: 28px 20px;
+    }
+    header div, main { width: min(760px, 100%); margin: 0 auto; }
+    h1 { margin: 0; font-size: 26px; line-height: 1.3; }
+    header p { margin: 8px 0 0; color: #d7e5f0; line-height: 1.6; }
+    main { padding: 20px; }
+    .notice {
+      background: #eaf7f5;
+      border-left: 4px solid var(--teal);
+      padding: 14px 16px;
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+    .day {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      margin: 10px 0;
+      padding: 16px;
+      scroll-margin-top: 12px;
+    }
+    .day:target { border: 2px solid var(--teal); }
+    .top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+    h2 { margin: 0; font-size: 18px; }
+    .accent { color: var(--muted); font-size: 13px; white-space: nowrap; }
+    audio { width: 100%; height: 40px; }
+    .steps { color: var(--muted); font-size: 13px; margin-top: 9px; line-height: 1.55; }
+    footer { color: var(--muted); text-align: center; padding: 26px 20px 40px; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>30 天英语训练音频</h1>
+      <p>配合《30 天英语提升训练册 V2》使用。扫描每日二维码后，页面会自动定位到对应日期。</p>
+    </div>
+  </header>
+  <main>
+    <div class="notice">
+      <strong>正确顺序：</strong>先盲听一次，不看训练册文本；第二遍看文本核对；第三遍逐句模仿；最后不看文本跟读并录下自己的声音。
+    </div>
+    <div id="days"></div>
+  </main>
+  <footer>音频为训练用标准示范，目标是清楚、可理解和稳定，不是模仿特定口音。</footer>
+  <script>
+    const titles = [
+      "把英语重新叫醒", "清楚介绍自己的工作", "接住问题，不急着给答案", "确认需求", "说清当前状态",
+      "自然的生活自我介绍", "第一次口语验收", "解释限制，但不显得推脱", "避免过度承诺", "提出临时方案",
+      "请求客户配合", "推动内部团队", "让闲聊继续下去", "一分钟项目更新", "会议开场和设定议程",
+      "确认自己是否理解正确", "会议中澄清和追问", "表达不同意见", "总结会议共识", "讲一个真实小故事",
+      "五分钟模拟会议", "描述问题和原因", "回应客户催促", "比较方案并给建议", "用英文复盘一次项目",
+      "职业自我介绍", "表达观点并延展讨论", "无稿快速反应", "完整模拟与最后修正", "30 天成果验收"
+    ];
+    const accents = Array.from({length: 30}, (_, i) =>
+      i < 10 ? "美式示范" : i < 20 ? "英式示范" : "印度英语示范"
+    );
+    const container = document.querySelector("#days");
+    titles.forEach((title, index) => {
+      const day = String(index + 1).padStart(2, "0");
+      const section = document.createElement("section");
+      section.className = "day";
+      section.id = `day-${day}`;
+      section.innerHTML = `
+        <div class="top">
+          <h2>Day ${day} · ${title}</h2>
+          <span class="accent">${accents[index]}</span>
+        </div>
+        <audio controls preload="metadata" src="audio/day-${day}.m4a">
+          你的浏览器不支持音频播放。
+        </audio>
+        <div class="steps">盲听 → 核对 → 逐句模仿 → 不看文本跟读 → 录音比较</div>
+      `;
+      container.appendChild(section);
+    });
+  </script>
+</body>
+</html>
